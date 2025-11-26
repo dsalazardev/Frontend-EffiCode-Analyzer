@@ -1,6 +1,6 @@
 import React from 'react';
-import { SafeInlineMath } from '../ui/SafeMath';
-import { type LineCost } from '../../types';
+import { SafeInlineMath } from '../../ui/SafeMath/SafeMath';
+import { type LineCost } from '../../../types';
 import './LineCostsTable.css';
 
 interface LineCostsTableProps {

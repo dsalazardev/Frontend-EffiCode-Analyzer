@@ -1,6 +1,6 @@
 import React from 'react';
-import { SafeBlockMath } from '../ui/SafeMath';
-import { type ResolutionStep } from '../../types';
+import { SafeBlockMath } from '../../ui/SafeMath/SafeMath';
+import { type ResolutionStep } from '../../../types';
 import './ResolutionSteps.css';
 
 interface ResolutionStepsProps {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeInlineMath } from '../ui/SafeMath';
+import { SafeInlineMath } from '../../ui/SafeMath/SafeMath';
 import './ComplexityCards.css';
 
 interface ComplexityCardsProps {
