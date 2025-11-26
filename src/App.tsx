@@ -13,7 +13,8 @@ import {
   ResolutionSteps, 
   LineCostsTable, 
   ValidationCard, 
-  ASTViewer 
+  ASTViewer,
+  AIValidation 
 } from './components/analysis';
 
 // Services & Types
@@ -113,9 +114,9 @@ function App() {
               warnings={result.warnings}
             />
             {result.validation && (
-              <Card title="Validación IA" icon="🤖" className="mt-20">
-                <pre className="validation-text">{result.validation}</pre>
-              </Card>
+              <div className="mt-20">
+                <AIValidation content={result.validation} />
+              </div>
             )}
           </div>
         )
