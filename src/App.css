@@ -1,0 +1,413 @@
+/* ========================================
+   EffiCode Analyzer - Main Styles
+   Layout: Editor TOP, Results BOTTOM
+   ======================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+/* ========================================
+   CSS Variables
+   ======================================== */
+:root {
+  --color-primary: #667eea;
+  --color-primary-dark: #5a67d8;
+  --color-secondary: #764ba2;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-info: #3b82f6;
+  
+  --color-text-primary: #1a1a2e;
+  --color-text-secondary: #5f6368;
+  --color-text-muted: #6c7086;
+  
+  --color-bg-primary: #f8f9ff;
+  --color-bg-secondary: #ffffff;
+  --color-bg-dark: #1e1e2e;
+  
+  --color-border: #e8eaed;
+  --color-border-light: #f1f3f4;
+  
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+  
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'Fira Code', 'Monaco', 'Consolas', monospace;
+}
+
+/* ========================================
+   Reset & Base
+   ======================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  margin: 0;
+}
+
+/* ========================================
+   App Layout - FIXED FULL SCREEN
+   ======================================== */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* ========================================
+   Header
+   ======================================== */
+.app-header {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  padding: 12px 24px;
+  box-shadow: var(--shadow-md);
+  flex-shrink: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-logo {
+  font-size: 2rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.header-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.header-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.header-subtitle {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* ========================================
+   Main Content - FIXED LAYOUT
+   ======================================== */
+.app-main {
+  flex: 1;
+  width: 100%;
+  max-width: 100%;
+  padding: 24px 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 24px;
+  overflow: hidden;
+  height: calc(100vh - 120px); /* Header + Footer */
+}
+
+/* ========================================
+   Editor Section (LEFT COLUMN)
+   ======================================== */
+.editor-section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0; /* Important for flex children */
+  overflow: hidden;
+}
+
+.editor-section .card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.editor-section .card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.editor-card {
+  height: 100%;
+}
+
+.editor-actions {
+  margin-top: 20px;
+}
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-md);
+  color: #dc2626;
+}
+
+.error-icon {
+  font-size: 1.25rem;
+}
+
+.error-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* ========================================
+   Results Section (RIGHT COLUMN)
+   ======================================== */
+.results-section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.results-container {
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-md);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.results-container .tabs {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.results-container .tabs-content {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* Placeholder */
+.placeholder-card {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder-content {
+  text-align: center;
+  padding: 32px;
+  max-width: 400px;
+}
+
+.placeholder-icon {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 20px;
+  opacity: 0.6;
+}
+
+.placeholder-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 12px;
+}
+
+.placeholder-text {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+.placeholder-features {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: var(--color-bg-primary);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+}
+
+.feature-item span:first-child {
+  font-size: 1.25rem;
+}
+
+/* ========================================
+   Tab Content
+   ======================================== */
+.tab-content {
+  padding: 8px 0;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+/* Validation text */
+.validation-text {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 0;
+  padding: 16px;
+  background: var(--color-bg-primary);
+  border-radius: var(--radius-sm);
+}
+
+/* ========================================
+   Footer
+   ======================================== */
+.app-footer {
+  background: var(--color-bg-dark);
+  padding: 12px 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.app-footer p {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+/* ========================================
+   KaTeX Overrides
+   ======================================== */
+.katex,
+.katex-html,
+.katex .base {
+  color: var(--color-text-primary) !important;
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+@media (max-width: 1024px) {
+  .app-main {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: auto;
+    min-height: calc(100vh - 100px);
+    overflow-y: auto;
+  }
+  
+  .editor-section,
+  .results-section {
+    height: auto;
+    min-height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    padding: 10px 16px;
+  }
+  
+  .header-title {
+    font-size: 1.25rem;
+  }
+  
+  .header-subtitle {
+    display: none;
+  }
+  
+  .app-main {
+    padding: 16px;
+    gap: 16px;
+  }
+  
+  .placeholder-content {
+    padding: 24px;
+  }
+  
+  .placeholder-icon {
+    font-size: 3rem;
+  }
+  
+  .placeholder-title {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-brand {
+    gap: 10px;
+  }
+  
+  .header-logo {
+    font-size: 1.5rem;
+  }
+  
+  .header-title {
+    font-size: 1.1rem;
+  }
+}

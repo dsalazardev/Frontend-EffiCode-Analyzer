@@ -1,0 +1,91 @@
+.tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  height: 100%;
+  min-height: 0;
+}
+
+.tabs__header {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid #e8eaed;
+  padding: 0 8px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.tabs__tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #5f6368;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.tabs__tab:hover {
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.05);
+}
+
+.tabs__tab--active {
+  color: #667eea;
+  border-bottom-color: #667eea;
+}
+
+.tabs__tab-icon {
+  font-size: 1.1em;
+}
+
+.tabs__content {
+  padding: 16px 0;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* Pills variant */
+.tabs--pills .tabs__header {
+  border-bottom: none;
+  background: #f1f3f4;
+  border-radius: 10px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.tabs--pills .tabs__tab {
+  border-radius: 6px;
+  border-bottom: none;
+  margin-bottom: 0;
+  padding: 8px 14px;
+  font-size: 0.8rem;
+}
+
+.tabs--pills .tabs__tab--active {
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Underline variant */
+.tabs--underline .tabs__header {
+  border-bottom: 1px solid #e8eaed;
+}
+
+.tabs--underline .tabs__tab {
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+}
+
+.tabs--underline .tabs__tab--active {
+  border-bottom-color: #667eea;
+}

@@ -1,0 +1,82 @@
+.complexity-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.complexity-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  border-left: 4px solid;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.complexity-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.complexity-card__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.complexity-card__icon {
+  font-size: 1.5rem;
+}
+
+.complexity-card__label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6c7086;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.complexity-card__value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.complexity-card__value .katex {
+  color: #1a1a2e !important;
+}
+
+.complexity-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.complexity-card__name {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.complexity-card__desc {
+  font-size: 0.85rem;
+  color: #6c7086;
+}
+
+/* Variaciones por tipo */
+.complexity-card--big-o {
+  background: linear-gradient(135deg, #fff 0%, #fef3f2 100%);
+}
+
+.complexity-card--big-omega {
+  background: linear-gradient(135deg, #fff 0%, #f0fdf4 100%);
+}
+
+.complexity-card--big-theta {
+  background: linear-gradient(135deg, #fff 0%, #fefce8 100%);
+}

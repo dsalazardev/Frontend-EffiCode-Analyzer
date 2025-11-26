@@ -1,0 +1,52 @@
+.safe-block-math,
+.safe-inline-math {
+  color: #1a1a2e !important;
+}
+
+.safe-block-math .katex,
+.safe-inline-math .katex {
+  color: #1a1a2e !important;
+}
+
+.safe-block-math .katex-html,
+.safe-inline-math .katex-html {
+  color: #1a1a2e !important;
+}
+
+.safe-block-math .katex .base,
+.safe-inline-math .katex .base {
+  color: #1a1a2e !important;
+}
+
+.safe-block-math {
+  margin: 12px 0;
+  padding: 16px;
+  background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+  overflow-x: auto;
+}
+
+.safe-inline-math {
+  padding: 2px 6px;
+  background: rgba(102, 126, 234, 0.08);
+  border-radius: 4px;
+}
+
+.math-fallback {
+  font-family: 'Fira Code', 'Monaco', monospace;
+  background: #f1f3f4;
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: #5f6368;
+}
+
+.math-fallback--error {
+  background: #fef3f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+}
+
+.math-fallback code {
+  font-size: 0.9em;
+}
