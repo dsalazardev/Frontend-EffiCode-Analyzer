@@ -1,11 +1,11 @@
 import React from 'react';
 import { SafeBlockMath } from '../../ui/SafeMath/SafeMath';
-import { type ResolutionStep } from '../../../types';
+import { type ResolutionStep, type CaseType } from '../../../types';
 import './ResolutionSteps.css';
 
 interface ResolutionStepsProps {
   steps: ResolutionStep[];
-  caseType: 'worst' | 'best';
+  caseType: CaseType;
 }
 
 export const ResolutionSteps: React.FC<ResolutionStepsProps> = ({ steps, caseType }) => {
@@ -17,8 +17,13 @@ export const ResolutionSteps: React.FC<ResolutionStepsProps> = ({ steps, caseTyp
     );
   }
 
-  const caseLabel = caseType === 'worst' ? 'Peor Caso (Big O)' : 'Mejor Caso (Big Ω)';
-  const caseIcon = caseType === 'worst' ? '📈' : '📉';
+  const caseConfig = {
+    worst: { label: 'Peor Caso (Big O)', icon: '📈' },
+    best: { label: 'Mejor Caso (Big Ω)', icon: '📉' },
+    average: { label: 'Caso Promedio E[T(n)]', icon: '📊' }
+  };
+
+  const { label: caseLabel, icon: caseIcon } = caseConfig[caseType];
 
   return (
     <div className={`resolution-steps resolution-steps--${caseType}`}>

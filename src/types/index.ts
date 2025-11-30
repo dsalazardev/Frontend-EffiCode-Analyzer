@@ -1,5 +1,6 @@
 // Tipos compartidos para toda la aplicación
 // Estructura basada en Backend/Modelos/Analizador.py
+// Incluye soporte para caso promedio (Cormen Cap. 5)
 
 export interface ResolutionStep {
   step: number;
@@ -22,7 +23,10 @@ export interface CaseConclusion {
 
 export interface AverageCase {
   complexity: string;
+  dominant_term?: string;
   description: string;
+  distribution_assumed?: string;
+  constant_factor?: string;
 }
 
 export interface Conclusion {
@@ -34,6 +38,7 @@ export interface Conclusion {
 export interface ResolutionSteps {
   worst_case: ResolutionStep[];
   best_case: ResolutionStep[];
+  average_case?: ResolutionStep[];  // NUEVO: pasos del caso promedio
 }
 
 export interface JustificationData {
@@ -42,12 +47,18 @@ export interface JustificationData {
   line_costs?: LineCost[];
   resolution_steps?: ResolutionSteps;
   conclusion?: Conclusion;
+  // Campos adicionales para algoritmos recursivos
+  recurrence_equation?: string;
+  recursion_type?: string;
+  method_used?: string;
+  references?: string;
 }
 
 export interface AnalysisResult {
   complexity_o?: string;
   complexity_omega?: string;
   complexity_theta?: string;
+  complexity_average?: string;  // NUEVO: complejidad del caso promedio
   justification?: string;
   justification_data?: JustificationData;
   validation?: string;
@@ -57,4 +68,4 @@ export interface AnalysisResult {
   warnings?: string[];
 }
 
-export type CaseType = 'worst' | 'best';
+export type CaseType = 'worst' | 'best' | 'average';  // NUEVO: incluir 'average'

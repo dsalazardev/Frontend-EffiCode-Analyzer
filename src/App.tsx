@@ -49,6 +49,9 @@ function App() {
   const getResultTabs = (): TabItem[] => {
     if (!result) return [];
 
+    // Extraer información del caso promedio
+    const averageCaseData = result.justification_data?.conclusion?.average_case;
+
     const tabs: TabItem[] = [
       {
         id: 'complexity',
@@ -60,6 +63,10 @@ function App() {
               bigO={result.complexity_o || 'N/A'}
               bigOmega={result.complexity_omega || 'N/A'}
               bigTheta={result.complexity_theta}
+              averageCase={averageCaseData ? {
+                complexity: averageCaseData.complexity,
+                description: averageCaseData.description
+              } : undefined}
             />
           </div>
         )
@@ -86,6 +93,19 @@ function App() {
             <ResolutionSteps 
               steps={result.justification_data?.resolution_steps?.best_case || []}
               caseType="best"
+            />
+          </div>
+        )
+      },
+      {
+        id: 'resolution-average',
+        label: 'Caso Promedio',
+        icon: <span>📊</span>,
+        content: (
+          <div className="tab-content">
+            <ResolutionSteps 
+              steps={result.justification_data?.resolution_steps?.average_case || []}
+              caseType="average"
             />
           </div>
         )

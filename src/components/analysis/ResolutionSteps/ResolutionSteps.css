@@ -180,3 +180,25 @@
 .resolution-steps--best .resolution-step::before {
   background: linear-gradient(180deg, #10b981 0%, #bbf7d0 100%);
 }
+
+/* NUEVO: Estilos para caso promedio */
+.resolution-steps--average .resolution-step__marker {
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+}
+
+.resolution-steps--average .resolution-step__content {
+  border-left-color: #8b5cf6;
+  background: #faf5ff;
+}
+
+.resolution-steps--average .resolution-step__title {
+  color: #7c3aed;
+}
+
+.resolution-steps--average .resolution-step::before {
+  background: linear-gradient(180deg, #8b5cf6 0%, #e9d5ff 100%);
+}
+
+.resolution-steps--average .resolution-step__formula .safe-block-math {
+  border-color: #8b5cf6;
+}

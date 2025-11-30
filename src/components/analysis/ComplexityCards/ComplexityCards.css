@@ -80,3 +80,18 @@
 .complexity-card--big-theta {
   background: linear-gradient(135deg, #fff 0%, #fefce8 100%);
 }
+
+/* NUEVO: Estilo para caso promedio E[T(n)] */
+.complexity-card--average {
+  background: linear-gradient(135deg, #fff 0%, #f5f3ff 100%);
+  border-left-color: #8b5cf6;
+}
+
+.complexity-card--average .complexity-card__value {
+  background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+}
+
+.complexity-card--average .complexity-card__desc {
+  font-style: italic;
+  color: #6b21a8;
+}

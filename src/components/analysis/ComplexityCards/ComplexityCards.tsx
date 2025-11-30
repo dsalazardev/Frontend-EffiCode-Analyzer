@@ -6,6 +6,10 @@ interface ComplexityCardsProps {
   bigO: string;
   bigOmega: string;
   bigTheta?: string;
+  averageCase?: {
+    complexity: string;
+    description?: string;
+  };
 }
 
 const complexityInfo: Record<string, { name: string; desc: string; color: string }> = {
@@ -58,11 +62,20 @@ const getComplexityMeta = (complexity: string) => {
 export const ComplexityCards: React.FC<ComplexityCardsProps> = ({
   bigO,
   bigOmega,
-  bigTheta
+  bigTheta,
+  averageCase
 }) => {
   const bigOMeta = getComplexityMeta(bigO);
   const bigOmegaMeta = getComplexityMeta(bigOmega);
-  const bigThetaMeta = bigTheta ? getComplexityMeta(bigTheta) : null;
+  
+  // Big Θ solo se muestra si es una complejidad válida (no "No aplicable")
+  const isThetaValid = bigTheta && 
+    !bigTheta.toLowerCase().includes('no aplicable') && 
+    !bigTheta.toLowerCase().includes('n/a') &&
+    bigTheta.trim() !== '';
+  const bigThetaMeta = isThetaValid ? getComplexityMeta(bigTheta) : null;
+  
+  const averageMeta = averageCase?.complexity ? getComplexityMeta(averageCase.complexity) : null;
 
   // Convertir notación a LaTeX
   const toLatex = (notation: string) => {
@@ -108,20 +121,40 @@ export const ComplexityCards: React.FC<ComplexityCardsProps> = ({
         </div>
       </div>
 
-      {bigTheta && bigThetaMeta && (
+      {isThetaValid && bigThetaMeta && (
         <div className="complexity-card complexity-card--big-theta" style={{ borderColor: bigThetaMeta.color }}>
           <div className="complexity-card__header">
             <span className="complexity-card__icon" style={{ color: bigThetaMeta.color }}>⚖️</span>
-            <span className="complexity-card__label">Big Θ (Caso Promedio)</span>
+            <span className="complexity-card__label">Big Θ (Cota Ajustada)</span>
           </div>
           <div className="complexity-card__value">
-            <SafeInlineMath math={toLatex(bigTheta)} fallback={bigTheta} />
+            <SafeInlineMath math={toLatex(bigTheta!)} fallback={bigTheta!} />
           </div>
           <div className="complexity-card__meta">
             <span className="complexity-card__name" style={{ color: bigThetaMeta.color }}>
               {bigThetaMeta.name}
             </span>
-            <span className="complexity-card__desc">{bigThetaMeta.desc}</span>
+            <span className="complexity-card__desc">Peor = Mejor caso (cota ajustada)</span>
+          </div>
+        </div>
+      )}
+
+      {averageCase && averageMeta && (
+        <div className="complexity-card complexity-card--average" style={{ borderColor: '#8b5cf6' }}>
+          <div className="complexity-card__header">
+            <span className="complexity-card__icon" style={{ color: '#8b5cf6' }}>📊</span>
+            <span className="complexity-card__label">E[T(n)] (Caso Promedio)</span>
+          </div>
+          <div className="complexity-card__value">
+            <SafeInlineMath math={toLatex(averageCase.complexity)} fallback={averageCase.complexity} />
+          </div>
+          <div className="complexity-card__meta">
+            <span className="complexity-card__name" style={{ color: '#8b5cf6' }}>
+              {averageMeta.name}
+            </span>
+            <span className="complexity-card__desc">
+              {averageCase.description || 'Análisis probabilístico (Cormen Cap. 5)'}
+            </span>
           </div>
         </div>
       )}
