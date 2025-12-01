@@ -31,7 +31,7 @@ export const DownloadReport: React.FC<DownloadReportProps> = ({
     setError(null);
 
     try {
-      const response = await fetch(`${API_URL}/api/analysis/report/${format}`, {
+      const response = await fetch(`${API_URL}/report/${format}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
