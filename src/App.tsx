@@ -14,7 +14,8 @@ import {
   LineCostsTable, 
   ValidationCard, 
   ASTViewer,
-  AIValidation 
+  AIValidation,
+  DownloadReport
 } from './components/analysis';
 
 // Services & Types
@@ -138,6 +139,28 @@ function App() {
                 <AIValidation content={result.validation} />
               </div>
             )}
+          </div>
+        )
+      },
+      {
+        id: 'download',
+        label: 'Descargar',
+        icon: <span>📥</span>,
+        content: (
+          <div className="tab-content">
+            <DownloadReport
+              pseudocode={code}
+              analysisData={{
+                complexity: {
+                  bigO: result.complexity_o || 'N/A',
+                  bigOmega: result.complexity_omega || 'N/A',
+                  bigTheta: result.complexity_theta || 'No aplicable',
+                  averageCase: averageCaseData?.complexity
+                },
+                justification: result.justification_data || {},
+                validation: result.validation
+              }}
+            />
           </div>
         )
       }
