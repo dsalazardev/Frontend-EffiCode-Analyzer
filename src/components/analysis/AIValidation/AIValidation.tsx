@@ -2,14 +2,37 @@ import React from 'react';
 import './AIValidation.css';
 
 interface AIValidationProps {
-  content: string;
+  content: string | null;
+  loading?: boolean;
 }
 
 /**
  * Componente que renderiza la respuesta de validación de IA
  * Parsea Markdown básico y lo muestra con buen formato
+ * Muestra estado de carga cuando loading=true o content=null
  */
-export const AIValidation: React.FC<AIValidationProps> = ({ content }) => {
+export const AIValidation: React.FC<AIValidationProps> = ({ content, loading = false }) => {
+  // Mostrar estado de carga
+  if (loading || content === null) {
+    return (
+      <div className="ai-validation ai-validation--loading">
+        <div className="ai-validation__header">
+          <span className="ai-validation__icon">🤖</span>
+          <h3 className="ai-validation__title">Validación con IA</h3>
+        </div>
+        <div className="ai-validation__loading-content">
+          <div className="ai-validation__spinner"></div>
+          <p className="ai-validation__loading-text">
+            Consultando a la IA para validar el análisis...
+          </p>
+          <p className="ai-validation__loading-subtext">
+            Esto puede tomar unos segundos
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   // Parsear el contenido Markdown a elementos React
   const parseMarkdown = (text: string): React.ReactNode[] => {
     const lines = text.split('\n');

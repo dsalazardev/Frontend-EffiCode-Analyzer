@@ -34,7 +34,7 @@ INSERTION-SORT(A, n)
 
 function App() {
   const [code, setCode] = useState<string>(EXAMPLE_CODE);
-  const { result, loading, error, analyze, reset } = useAnalysis();
+  const { result, loading, error, validationLoading, validationError, analyze, reset } = useAnalysis();
   const [, setActiveResultTab] = useState<string>('complexity');
 
   const handleAnalyze = () => {
@@ -134,11 +134,13 @@ function App() {
               errors={result.errors}
               warnings={result.warnings}
             />
-            {result.validation && (
-              <div className="mt-20">
-                <AIValidation content={result.validation} />
-              </div>
-            )}
+            <div className="mt-20">
+              <AIValidation 
+                content={result.validation || ''} 
+                loading={validationLoading}
+                error={validationError}
+              />
+            </div>
           </div>
         )
       },
