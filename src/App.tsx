@@ -15,7 +15,8 @@ import {
   ValidationCard, 
   ASTViewer,
   AIValidation,
-  DownloadReport
+  DownloadReport,
+  RecursionTree
 } from './components/analysis';
 
 // Services & Types
@@ -111,6 +112,21 @@ function App() {
           </div>
         )
       },
+      // Mostrar árbol de recursión solo para algoritmos recursivos
+      ...(result.justification_data?.is_recursive ? [{
+        id: 'recursion-tree',
+        label: 'Árbol Recursión',
+        icon: <span>🌳</span>,
+        content: (
+          <div className="tab-content">
+            <RecursionTree 
+              data={result.justification_data?.recursion_tree}
+              methodUsed={result.justification_data?.method_used}
+              recurrenceEquation={result.justification_data?.recurrence_equation}
+            />
+          </div>
+        )
+      }] : []),
       {
         id: 'line-costs',
         label: 'Costos',

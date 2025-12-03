@@ -41,6 +41,31 @@ export interface ResolutionSteps {
   average_case?: ResolutionStep[];  // NUEVO: pasos del caso promedio
 }
 
+// Nodo del árbol de recursión para visualización
+export interface RecursionTreeNode {
+  id: string;
+  label: string;           // Ej: "T(n)", "T(n/2)"
+  cost: string;            // Costo en este nivel: "cn", "cn/2"
+  children?: RecursionTreeNode[];
+  level: number;           // Profundidad en el árbol
+}
+
+export interface RecursionTreeParameters {
+  a: number;
+  b: number;
+  f_n: string;
+  log_b_a: number;
+}
+
+export interface RecursionTreeData {
+  root: RecursionTreeNode;
+  levels: number;          // Número total de niveles
+  levelCosts: string[];    // Costo por nivel: ["cn", "cn", "cn", ...]
+  totalCost: string;       // Suma total
+  complexity: string;      // Resultado final Θ(...)
+  parameters?: RecursionTreeParameters;
+}
+
 export interface JustificationData {
   worst_case_function?: string;
   best_case_function?: string;
@@ -52,6 +77,9 @@ export interface JustificationData {
   recursion_type?: string;
   method_used?: string;
   references?: string;
+  // Árbol de recursión para visualización
+  recursion_tree?: RecursionTreeData;
+  is_recursive?: boolean;
 }
 
 export interface AnalysisResult {

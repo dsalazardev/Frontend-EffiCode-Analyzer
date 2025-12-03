@@ -1,0 +1,361 @@
+.recursion-tree {
+  background: linear-gradient(135deg, #1a1f2e 0%, #0d1117 100%);
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+/* Header */
+.recursion-tree__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.recursion-tree__method {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.recursion-tree__method-icon {
+  font-size: 2rem;
+}
+
+.recursion-tree__method-info h3 {
+  margin: 0;
+  color: #e2e8f0;
+  font-size: 1.25rem;
+}
+
+.recursion-tree__method-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+.recursion-tree__equation {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(99, 102, 241, 0.1);
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+.equation-label {
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+.recursion-tree__equation code {
+  color: #a5b4fc;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.95rem;
+}
+
+/* Tree Visualization */
+.recursion-tree__visualization {
+  overflow-x: auto;
+  padding: 24px 0;
+  margin: 0 -12px;
+}
+
+.tree-container {
+  display: flex;
+  justify-content: center;
+  min-width: fit-content;
+  padding: 0 24px;
+}
+
+/* Tree Node Styles */
+.tree-node-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tree-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 70px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #374151, #1f2937);
+  border: 2px solid #4b5563;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.tree-node:hover {
+  transform: scale(1.05);
+  border-color: #6366f1;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+}
+
+.tree-node.level-0 {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  border-color: #818cf8;
+  min-width: 80px;
+}
+
+.tree-node.level-1 {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  border-color: #a78bfa;
+}
+
+.tree-node.level-2 {
+  background: linear-gradient(135deg, #a855f7, #9333ea);
+  border-color: #c084fc;
+}
+
+.tree-node.level-3,
+.tree-node.level-4 {
+  background: linear-gradient(135deg, #4b5563, #374151);
+  border-color: #6b7280;
+}
+
+.tree-node-label {
+  color: #f8fafc;
+  font-weight: 600;
+  font-size: 0.9rem;
+  font-family: 'Fira Code', monospace;
+}
+
+.tree-node-cost {
+  color: #fbbf24;
+  font-size: 0.75rem;
+  margin-top: 2px;
+  font-family: 'Fira Code', monospace;
+}
+
+/* Tree Connectors */
+.tree-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  height: 30px;
+}
+
+.tree-line-vertical {
+  width: 2px;
+  height: 15px;
+  background: linear-gradient(to bottom, #6366f1, #4b5563);
+}
+
+.tree-line-horizontal {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background: #4b5563;
+  width: var(--connector-width, 100%);
+}
+
+.tree-children {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  position: relative;
+}
+
+.tree-children::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 25%;
+  right: 25%;
+  height: 2px;
+  background: #4b5563;
+}
+
+.tree-children > .tree-node-container::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  width: 2px;
+  height: 15px;
+  background: #4b5563;
+}
+
+.tree-children > .tree-node-container {
+  position: relative;
+}
+
+/* Costs Table */
+.recursion-tree__costs {
+  margin-top: 24px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.recursion-tree__costs h4 {
+  margin: 0 0 12px 0;
+  color: #e2e8f0;
+  font-size: 1rem;
+}
+
+.costs-table {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.costs-header,
+.costs-row {
+  display: grid;
+  grid-template-columns: 80px 120px 1fr;
+  gap: 16px;
+  padding: 8px 12px;
+  align-items: center;
+}
+
+.costs-header {
+  color: #94a3b8;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.costs-row {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.costs-row:hover {
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.costs-row--leaves {
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px dashed rgba(251, 191, 36, 0.3);
+}
+
+.level-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: rgba(99, 102, 241, 0.2);
+  color: #a5b4fc;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.nodes-count {
+  color: #94a3b8;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+}
+
+.level-cost {
+  color: #fbbf24;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+}
+
+/* Result */
+.recursion-tree__result {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.result-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 78, 59, 0.15));
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+.result-icon {
+  font-size: 1.5rem;
+}
+
+.result-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.result-label {
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+.result-complexity {
+  color: #10b981;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'Fira Code', monospace;
+}
+
+.parameters-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.parameters-info span {
+  color: #94a3b8;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+}
+
+.parameters-info sub {
+  font-size: 0.7em;
+}
+
+/* Empty State */
+.recursion-tree--empty {
+  text-align: center;
+  padding: 40px;
+  color: #64748b;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .recursion-tree__header {
+    flex-direction: column;
+  }
+  
+  .costs-header,
+  .costs-row {
+    grid-template-columns: 60px 80px 1fr;
+    gap: 8px;
+    font-size: 0.8rem;
+  }
+  
+  .tree-children {
+    gap: 8px;
+  }
+  
+  .tree-node {
+    min-width: 55px;
+    padding: 8px 10px;
+  }
+}

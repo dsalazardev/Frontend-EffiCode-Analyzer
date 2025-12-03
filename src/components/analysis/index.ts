@@ -6,3 +6,4 @@ export { ValidationCard } from './ValidationCard/ValidationCard';
 export { ASTViewer } from './ASTViewer/ASTViewer';
 export { AIValidation } from './AIValidation/AIValidation';
 export { DownloadReport } from './DownloadReport/DownloadReport';
+export { RecursionTree } from './RecursionTree/RecursionTree';
