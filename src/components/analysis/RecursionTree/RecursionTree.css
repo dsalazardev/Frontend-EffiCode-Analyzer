@@ -330,11 +330,25 @@
   font-size: 0.7em;
 }
 
+.recursion-type-badge {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white !important;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem !important;
+}
+
 /* Empty State */
 .recursion-tree--empty {
   text-align: center;
   padding: 40px;
   color: #64748b;
+}
+
+.recursion-tree__hint {
+  font-size: 0.85rem;
+  margin-top: 8px;
+  opacity: 0.7;
 }
 
 /* Responsive */

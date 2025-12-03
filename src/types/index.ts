@@ -44,17 +44,18 @@ export interface ResolutionSteps {
 // Nodo del árbol de recursión para visualización
 export interface RecursionTreeNode {
   id: string;
-  label: string;           // Ej: "T(n)", "T(n/2)"
-  cost: string;            // Costo en este nivel: "cn", "cn/2"
+  label: string;           // Ej: "T(n)", "T(n/2)", "T(n-1)"
+  cost: string;            // Costo en este nivel: "cn", "cn/2", "c"
   children?: RecursionTreeNode[];
   level: number;           // Profundidad en el árbol
 }
 
 export interface RecursionTreeParameters {
   a: number;
-  b: number;
+  b: number | string;      // Puede ser número (divide y vencerás) o string "n-1" (lineal)
   f_n: string;
-  log_b_a: number;
+  log_b_a?: number;        // Solo aplica para divide y vencerás
+  type?: string;           // Tipo de recurrencia: "lineal", "fibonacci", "divide_and_conquer"
 }
 
 export interface RecursionTreeData {

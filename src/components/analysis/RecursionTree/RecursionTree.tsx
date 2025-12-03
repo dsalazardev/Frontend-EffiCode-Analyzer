@@ -3,7 +3,7 @@ import { type RecursionTreeData, type RecursionTreeNode } from '../../../types';
 import './RecursionTree.css';
 
 interface RecursionTreeProps {
-  data: RecursionTreeData;
+  data?: RecursionTreeData;
   methodUsed?: string;
   recurrenceEquation?: string;
 }
@@ -35,6 +35,50 @@ const TreeNode: React.FC<{ node: RecursionTreeNode; isRoot?: boolean }> = ({ nod
   );
 };
 
+// Helper para determinar si es recursión lineal
+const isLinearRecursion = (params?: RecursionTreeData['parameters']): boolean => {
+  if (!params) return false;
+  return typeof params.b === 'string' || params.type === 'lineal' || params.type === 'fibonacci';
+};
+
+// Helper para calcular nodos por nivel
+const getNodesAtLevel = (a: number, level: number, isLinear: boolean, type?: string): string => {
+  if (type === 'fibonacci') {
+    // Fibonacci: aproximadamente φ^nivel nodos
+    return level === 0 ? '1' : `≈φ^${level}`;
+  }
+  if (isLinear && a === 1) {
+    return '1';
+  }
+  return String(Math.pow(a, level));
+};
+
+// Helper para obtener la descripción de hojas
+const getLeavesDescription = (params?: RecursionTreeData['parameters']): string => {
+  if (!params) return '-';
+  
+  if (params.type === 'fibonacci') {
+    return 'φ^n hojas';
+  }
+  
+  if (isLinearRecursion(params)) {
+    if (params.a === 1) {
+      return 'n niveles';
+    }
+    return `${params.a}^n hojas`;
+  }
+  
+  // Divide y vencerás
+  if (params.log_b_a !== undefined) {
+    return (
+      <>
+        n<sup>log<sub>{params.b}</sub>{params.a}</sup>
+      </> as unknown as string
+    );
+  }
+  return '-';
+};
+
 export const RecursionTree: React.FC<RecursionTreeProps> = ({ 
   data, 
   methodUsed,
@@ -44,9 +88,14 @@ export const RecursionTree: React.FC<RecursionTreeProps> = ({
     return (
       <div className="recursion-tree recursion-tree--empty">
         <p>No hay datos del árbol de recursión disponibles.</p>
+        <p className="recursion-tree__hint">
+          El árbol de recursión se genera cuando el método de resolución lo permite.
+        </p>
       </div>
     );
   }
+
+  const isLinear = isLinearRecursion(data.parameters);
 
   return (
     <div className="recursion-tree">
@@ -92,14 +141,24 @@ export const RecursionTree: React.FC<RecursionTreeProps> = ({
             <div key={index} className="costs-row">
               <span className="level-badge">{index}</span>
               <span className="nodes-count">
-                {data.parameters?.a ? Math.pow(data.parameters.a, index) : '-'}
+                {data.parameters?.a 
+                  ? getNodesAtLevel(data.parameters.a, index, isLinear, data.parameters.type)
+                  : '-'}
               </span>
               <span className="level-cost">{cost}</span>
             </div>
           ))}
           <div className="costs-row costs-row--leaves">
             <span className="level-badge">...</span>
-            <span className="nodes-count">n<sup>log<sub>b</sub>a</sup></span>
+            <span className="nodes-count">
+              {isLinear ? (
+                data.parameters?.type === 'fibonacci' ? 'φ^n' :
+                data.parameters?.a === 1 ? 'n niveles' : 
+                <>{data.parameters?.a}<sup>n</sup></>
+              ) : (
+                <>n<sup>log<sub>b</sub>a</sup></>
+              )}
+            </span>
             <span className="level-cost">{data.levelCosts[data.levelCosts.length - 1]}</span>
           </div>
         </div>
@@ -118,9 +177,22 @@ export const RecursionTree: React.FC<RecursionTreeProps> = ({
         {data.parameters && (
           <div className="parameters-info">
             <span>a = {data.parameters.a}</span>
-            <span>b = {data.parameters.b}</span>
+            <span>
+              {isLinear 
+                ? `Decremento: ${data.parameters.b}` 
+                : `b = ${data.parameters.b}`}
+            </span>
             <span>f(n) = {data.parameters.f_n}</span>
-            <span>log<sub>b</sub>a = {data.parameters.log_b_a}</span>
+            {!isLinear && data.parameters.log_b_a !== undefined && (
+              <span>log<sub>b</sub>a = {data.parameters.log_b_a}</span>
+            )}
+            {data.parameters.type && (
+              <span className="recursion-type-badge">
+                {data.parameters.type === 'fibonacci' ? '🔄 Fibonacci' :
+                 data.parameters.type === 'lineal' ? '📏 Lineal' : 
+                 '🔀 Divide y Vencerás'}
+              </span>
+            )}
           </div>
         )}
       </div>
