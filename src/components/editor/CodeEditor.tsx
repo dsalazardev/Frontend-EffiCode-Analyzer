@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useCallback, type KeyboardEvent, useState } from 'react';
+import { NaturalLanguageModal } from './NaturalLanguageModal';
 import './CodeEditor.css';
 
 interface CodeEditorProps {
@@ -86,6 +87,12 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
   const highlightRef = useRef<HTMLPreElement>(null);
   const lineNumbersRef = useRef<HTMLDivElement>(null);
   const [focused, setFocused] = useState(false);
+  const [isNaturalLanguageModalOpen, setIsNaturalLanguageModalOpen] = useState(false);
+
+  // Handler para cuando se genera pseudocódigo desde lenguaje natural
+  const handlePseudocodeGenerated = (pseudocode: string) => {
+    onChange(pseudocode);
+  };
 
   // Sincronizar scroll entre elementos
   const syncScroll = useCallback(() => {
@@ -252,6 +259,20 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
             </svg>
             Identar
           </button>
+          <button
+            className="code-editor__ai-btn"
+            onClick={() => setIsNaturalLanguageModalOpen(true)}
+            disabled={readOnly}
+            title="Generar pseudocódigo desde lenguaje natural (IA)"
+          >
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+              <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+              <circle cx="8" cy="10" r="1.5"/>
+              <circle cx="12" cy="10" r="1.5"/>
+              <circle cx="16" cy="10" r="1.5"/>
+            </svg>
+            Lenguaje Natural
+          </button>
           <span className="code-editor__lines">{lineNumbers.length} líneas</span>
         </div>
       </div>
@@ -288,6 +309,13 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
           />
         </div>
       </div>
+
+      {/* Modal para lenguaje natural */}
+      <NaturalLanguageModal
+        isOpen={isNaturalLanguageModalOpen}
+        onClose={() => setIsNaturalLanguageModalOpen(false)}
+        onPseudocodeGenerated={handlePseudocodeGenerated}
+      />
     </div>
   );
 };

@@ -80,3 +80,50 @@ export const validateWithAI = async (request: ValidationRequest): Promise<Valida
         };
     }
 };
+
+// Tipos para traducción de lenguaje natural
+export interface NaturalLanguageRequest {
+    text: string;
+}
+
+export interface NaturalLanguageResponse {
+    pseudocode: string;
+    status: 'completed' | 'error';
+    warning: string;
+}
+
+/**
+ * Traduce una descripción en lenguaje natural a pseudocódigo estilo Cormen.
+ * 
+ * ⚠️ Esta funcionalidad depende de IA (Google Gemini).
+ * Si el servicio no está disponible, la operación fallará.
+ * 
+ * @param text - Descripción en lenguaje natural del algoritmo
+ * @returns Pseudocódigo generado con advertencia de IA
+ */
+export const translateNaturalToPseudocode = async (text: string): Promise<NaturalLanguageResponse> => {
+    try {
+        const response = await axios.post<NaturalLanguageResponse>(
+            `${API_URL}/translate/natural-to-pseudocode`, 
+            { text }
+        );
+        return response.data;
+    } catch (error) {
+        console.error("Error translating natural language:", error);
+        
+        // Verificar si es error de servicio no disponible
+        if (axios.isAxiosError(error) && error.response?.status === 503) {
+            return {
+                pseudocode: "",
+                status: 'error',
+                warning: "⚠️ El servicio de IA no está disponible. Verifique que GOOGLE_API_KEY esté configurado."
+            };
+        }
+        
+        return {
+            pseudocode: "",
+            status: 'error',
+            warning: "⚠️ Error al conectar con el servicio de traducción. Intente nuevamente."
+        };
+    }
+};

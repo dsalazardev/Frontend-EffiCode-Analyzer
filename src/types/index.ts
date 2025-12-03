@@ -98,3 +98,14 @@ export interface AnalysisResult {
 }
 
 export type CaseType = 'worst' | 'best' | 'average';  // NUEVO: incluir 'average'
+
+// Tipos para la funcionalidad de lenguaje natural
+export interface NaturalLanguageRequest {
+  text: string;
+}
+
+export interface NaturalLanguageResponse {
+  pseudocode: string;
+  status: 'completed' | 'error';
+  warning: string;
+}
