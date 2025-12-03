@@ -101,11 +101,11 @@
   text-align: right;
 }
 
-/* Content area */
+/* Content area - FIX: Single scrollbar only */
 .code-editor__content {
   flex: 1;
   position: relative;
-  overflow: auto;
+  overflow: hidden; /* Changed from auto to hidden - parent controls scroll */
 }
 
 .code-editor__highlight,
@@ -142,6 +142,7 @@
   resize: none;
   color: transparent;
   caret-color: #89b4fa;
+  overflow: auto; /* Only textarea has scroll */
 }
 
 .code-editor__textarea::placeholder {
@@ -186,30 +187,25 @@
   color: #89dceb; /* sky */
 }
 
-/* Scrollbar styling */
-.code-editor__content::-webkit-scrollbar,
+/* Scrollbar styling - Only for textarea */
 .code-editor__textarea::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
-.code-editor__content::-webkit-scrollbar-track,
 .code-editor__textarea::-webkit-scrollbar-track {
   background: #181825;
 }
 
-.code-editor__content::-webkit-scrollbar-thumb,
 .code-editor__textarea::-webkit-scrollbar-thumb {
   background: #45475a;
   border-radius: 5px;
 }
 
-.code-editor__content::-webkit-scrollbar-thumb:hover,
 .code-editor__textarea::-webkit-scrollbar-thumb:hover {
   background: #585b70;
 }
 
-.code-editor__content::-webkit-scrollbar-corner,
 .code-editor__textarea::-webkit-scrollbar-corner {
   background: #181825;
 }
