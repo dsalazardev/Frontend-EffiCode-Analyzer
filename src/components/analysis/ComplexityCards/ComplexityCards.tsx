@@ -19,7 +19,10 @@ const complexityInfo: Record<string, { name: string; desc: string; color: string
   'O(n log n)': { name: 'Lineal-Log', desc: 'Eficiente para ordenamiento', color: '#eab308' },
   'O(n²)': { name: 'Cuadrática', desc: 'Bucles anidados, crece rápido', color: '#f97316' },
   'O(n³)': { name: 'Cúbica', desc: 'Tres bucles anidados', color: '#ef4444' },
-  'O(2^n)': { name: 'Exponencial', desc: 'Muy ineficiente', color: '#dc2626' },
+  'O(2^n)': { name: 'Exponencial', desc: 'Torres de Hanoi, muy ineficiente', color: '#dc2626' },
+  'O(φ^n)': { name: 'Exponencial (φ)', desc: 'Fibonacci recursivo naive', color: '#dc2626' },
+  'O(1.618^n)': { name: 'Exponencial (φ)', desc: 'Fibonacci recursivo naive', color: '#dc2626' },
+  'O(n!)': { name: 'Factorial', desc: 'Permutaciones, extremadamente lento', color: '#991b1b' },
 };
 
 const getComplexityMeta = (complexity: string) => {
@@ -46,10 +49,24 @@ const getComplexityMeta = (complexity: string) => {
   if (normalized.includes('n³') || normalized.includes('n^3')) {
     return complexityInfo['O(n³)'];
   }
-  if (normalized.includes('logn') || normalized.includes('log n')) {
+  // Detectar exponenciales (2^n, φ^n, 1.618^n, etc.)
+  if (normalized.includes('2^n') || normalized.includes('2ⁿ')) {
+    return complexityInfo['O(2^n)'];
+  }
+  if (normalized.includes('φ^n') || normalized.includes('1.618') || normalized.includes('1.6180')) {
+    return complexityInfo['O(φ^n)'];
+  }
+  // Detectar cualquier exponencial a^n
+  if (/\d+(\.\d+)?\^n/.test(normalized) || /\d+(\.\d+)?ⁿ/.test(normalized)) {
+    return { name: 'Exponencial', desc: 'Crecimiento muy rápido', color: '#dc2626' };
+  }
+  if (normalized.includes('logn') || normalized.includes('lgn') || normalized.includes('log n') || normalized.includes('lg n')) {
     return complexityInfo['O(log n)'];
   }
-  if (normalized.includes('n') && !normalized.includes('²') && !normalized.includes('³')) {
+  if (normalized.includes('nlogn') || normalized.includes('nlgn')) {
+    return complexityInfo['O(n log n)'];
+  }
+  if (normalized.includes('n') && !normalized.includes('²') && !normalized.includes('³') && !normalized.includes('^')) {
     return complexityInfo['O(n)'];
   }
   if (normalized === 'O(1)' || normalized.includes('(1)')) {
