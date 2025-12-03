@@ -21,6 +21,61 @@ const CORMEN_FUNCTIONS = [
   'length', 'floor', 'ceiling', 'min', 'max', 'abs', 'sqrt', 'log', 'print'
 ];
 
+/**
+ * Formatea/Indenta código pseudocódigo automáticamente
+ * Basado en la gramática Cormen del backend
+ * 
+ * Este formateador PRESERVA la estructura de bloques del usuario,
+ * normalizando la indentación a múltiplos consistentes.
+ * 
+ * El pseudocódigo estilo Cormen usa indentación semántica (como Python),
+ * por lo que no podemos reconstruir la estructura sin palabras clave de cierre.
+ * 
+ * @param code - El código a formatear
+ * @param indentSize - Tamaño de la indentación (espacios)
+ * @returns Código formateado con indentación normalizada
+ */
+const formatPseudocode = (code: string, indentSize: number = 4): string => {
+  const lines = code.split('\n');
+  const result: string[] = [];
+  const indent = ' '.repeat(indentSize);
+  
+  // Primero, detectar el tamaño de indentación actual del código
+  let detectedIndent = 0;
+  for (const line of lines) {
+    const match = line.match(/^(\s+)/);
+    if (match && match[1].length > 0) {
+      const spaces = match[1].replace(/\t/g, '    ').length;  // tabs → 4 espacios
+      if (detectedIndent === 0 || (spaces > 0 && spaces < detectedIndent)) {
+        detectedIndent = spaces;
+      }
+    }
+  }
+  // Si no detectamos indentación, asumir 4 espacios
+  if (detectedIndent === 0) detectedIndent = 4;
+
+  for (let i = 0; i < lines.length; i++) {
+    const originalLine = lines[i];
+    const trimmedLine = originalLine.trim();
+    
+    // Líneas vacías: mantener vacías
+    if (trimmedLine === '') {
+      result.push('');
+      continue;
+    }
+
+    // Calcular el nivel de indentación actual de esta línea
+    const leadingSpaces = originalLine.match(/^(\s*)/)?.[1] || '';
+    const currentSpaces = leadingSpaces.replace(/\t/g, '    ').length;
+    const level = Math.round(currentSpaces / detectedIndent);
+
+    // Escribir con indentación normalizada
+    result.push(indent.repeat(level) + trimmedLine);
+  }
+
+  return result.join('\n');
+};
+
 export const CodeEditor: React.FC<CodeEditorProps> = ({
   value,
   onChange,
@@ -186,6 +241,17 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
         </div>
         <span className="code-editor__title">pseudocode.txt</span>
         <div className="code-editor__actions">
+          <button
+            className="code-editor__format-btn"
+            onClick={() => onChange(formatPseudocode(value))}
+            disabled={readOnly || !value.trim()}
+            title="Formatear código (Auto-indentar)"
+          >
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+              <path d="M3 21h18v-2H3v2zm0-4h18v-2H3v2zm0-4h18v-2H3v2zm0-4h18V7H3v2zm0-6v2h18V3H3z"/>
+            </svg>
+            Identar
+          </button>
           <span className="code-editor__lines">{lineNumbers.length} líneas</span>
         </div>
       </div>
